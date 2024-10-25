@@ -12,10 +12,14 @@ clock = pygame.time.Clock() #biblioteca de tempo
 fonte_quadrinhos = pygame.font.SysFont('Comic Sans MS', 100) # Importa fonte
 running = True # A variável booleana que pode acompanhar uma chamada
 personagem_X = fonte_quadrinhos.render('X', True, 'Red') # Criar personagem X
-personagem_Y = fonte_quadrinhos.render('O', True, 'Red') # Criar personagem Y
-apresenta_personagem = 0 # Cor do fundo do cenário
-X = 0
-Y = 0
+personagem_O = fonte_quadrinhos.render('O', True, 'Red') # Criar personagem Y
+
+jogador_atual = personagem_X # Inicializa o jogo com X 
+
+rodadas = 0 # Cor do fundo do cenário
+
+coordenada_X = 0
+coordenada_Y = 0
 
 while running:
     # poll for events (começo do evento)
@@ -29,13 +33,23 @@ while running:
             click_pos = pygame.mouse.get_pos() # a posição do mouse quando houver o evento click
             print('eixo X:', click_pos[0])
             print('eixo Y:', click_pos[1])
-            X = click_pos[0]
-            Y = click_pos[1]
-            apresenta_personagem = apresenta_personagem + 1
-            if(apresenta_personagem >= 10):
+            coordenada_X = click_pos[0]
+            coordenada_Y = click_pos[1]
+            rodadas = rodadas + 1
+            if(rodadas >= 10):
                 screen.fill('black')
-                apresenta_personagem = 0
-    
+                rodadas = 0
+                coordenada_X = 0
+                coordenada_Y = 0
+
+
+            if rodadas != 1: # (!) diferente
+                if jogador_atual == personagem_X:
+                  jogador_atual = personagem_O
+                else:
+                    jogador_atual = personagem_X
+            else:
+                    jogador_atual = personagem_X  
      
     # Desenhar Tabuleiro    
     # Linhas Verticais
@@ -50,38 +64,38 @@ while running:
    #Primeira linha
    # posição dos personagens no tabuleiro (X=O, Y)
    
-    if X > 0 and X 
-    < 200 and Y < 200:
-        screen.blit(personagem_X,(60,30)) # primeiro
+    if coordenada_X > 0 and coordenada_X < 200 and coordenada_Y < 200:
+        screen.blit(jogador_atual,(60,30)) # primeiro
 
-    elif X >= 200 and X < 400 and Y < 200:
-        screen.blit(personagem_Y,(260,30)) # segundo
+    elif coordenada_X >= 200 and coordenada_X < 400 and coordenada_Y < 200:
+        screen.blit(jogador_atual,(260,30)) # segundo
 
-    elif X >= 400 and Y < 200:
-        screen.blit(personagem_Y,(460,30)) # terceiro
+    elif coordenada_X >= 400 and coordenada_Y < 200:
+        screen.blit(jogador_atual,(460,30)) # terceiro
 
    # Segunda Linha
-    elif X < 200 and Y >= 200 and Y < 400:
-        screen.blit(personagem_X,(60,230)) # quarta
+    elif coordenada_X < 200 and coordenada_Y >= 200 and coordenada_Y < 400:
+        screen.blit(jogador_atual,(60,230)) # quarta
 
-    elif X >= 200 and X < 400 and Y >= 200 and Y < 400:
-        screen.blit(personagem_Y,(260,230)) # quinto
+    elif coordenada_X >= 200 and coordenada_X < 400 and coordenada_Y >= 200 and coordenada_Y < 400:
+        screen.blit(jogador_atual,(260,230)) # quinto
 
-    elif X >= 400 and Y >= 200 and Y < 400:
-        screen.blit(personagem_Y,(460,230)) # sexto
+    elif coordenada_X >= 400 and coordenada_Y >= 200 and coordenada_Y < 400:
+        screen.blit(jogador_atual,(460,230)) # sexto
 
    # Terceira linha
-    elif X < 200 and Y >= 400:
-        screen.blit(personagem_X,(60,430)) # setimo
+    elif coordenada_X < 200 and coordenada_Y >= 400:
+        screen.blit(jogador_atual,(60,430)) # setimo
 
-    elif X >= 200 and X < 400 and Y >= 400:
-        screen.blit(personagem_Y,(260,430)) # oitavo
+    elif coordenada_X >= 200 and coordenada_X < 400 and coordenada_Y >= 400:
+        screen.blit(jogador_atual,(260,430)) # oitavo
 
-    elif X >= 400 and Y >= 400:
-        screen.blit(personagem_Y,(460,430)) # nono         
+    elif coordenada_X >= 400 and coordenada_Y >= 400:
+        screen.blit(jogador_atual,(460,430)) # nono         
   
 
    
+
 
     # flip() the display to put your work on screen
     pygame.display.flip()
