@@ -17,51 +17,26 @@ personagem_O = fonte_quadrinhos.render('O', True, 'Red') # Criar personagem Y
 jogador_atual = personagem_X # Inicializa o jogo com X 
 
 rodadas = 0 # Cor do fundo do cenário
-
+tabuleiro_desenhado = False
 coordenada_X = 0
 coordenada_Y = 0
 
-while running:
-    # poll for events (começo do evento)
-       # pygame.QUIT event means the user clicked X to close your window
-       # Evento pygame.QUIT significa que o usuário clicou no X para fechar sua janela
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            print('Clicou')   
-            click_pos = pygame.mouse.get_pos() # a posição do mouse quando houver o evento click
-            print('eixo X:', click_pos[0])
-            print('eixo Y:', click_pos[1])
-            coordenada_X = click_pos[0]
-            coordenada_Y = click_pos[1]
-            rodadas = rodadas + 1
-            if(rodadas >= 10):
-                screen.fill('black')
-                rodadas = 0
-                coordenada_X = 0
-                coordenada_Y = 0
-
-
-            if rodadas != 1: # (!) diferente
-                if jogador_atual == personagem_X:
-                  jogador_atual = personagem_O
-                else:
-                    jogador_atual = personagem_X
-            else:
-                    jogador_atual = personagem_X  
-     
+def desenha_tabuleiro(espessura, cor):
+    
     # Desenhar Tabuleiro    
     # Linhas Verticais
-    #                                  origem        destino
-    #                                    (x   y)    (y     x)
-    pygame.draw.line(screen, 'white',(200, 0), (200, 600), 5) 
-    pygame.draw.line(screen, 'white',(400, 0), (400, 600), 5)
+    #                              origem     destino
+    #                             (x   y)    (y   x)
+    pygame.draw.line(screen, cor,(200, 0), (200, 600), espessura) 
+    pygame.draw.line(screen, cor,(400, 0), (400, 600), espessura)
+    
     # Linhas Horizontais
-    pygame.draw.line(screen, 'white',(0, 200), (600, 200), 5)
-    pygame.draw.line(screen, 'white',(0, 400), (600, 400), 5)
+    pygame.draw.line(screen, cor,(0, 200), (600, 200), espessura)
+    pygame.draw.line(screen, cor,(0, 400), (600, 400), espessura)
 
-   #Primeira linha
+def faz_jogada():
+    
+    # Primeira linha
    # posição dos personagens no tabuleiro (X=O, Y)
    
     if coordenada_X > 0 and coordenada_X < 200 and coordenada_Y < 200:
@@ -93,6 +68,47 @@ while running:
     elif coordenada_X >= 400 and coordenada_Y >= 400:
         screen.blit(jogador_atual,(460,430)) # nono         
   
+
+while running:
+    # poll for events (começo do evento)
+       # pygame.QUIT event means the user clicked X to close your window
+       # Evento pygame.QUIT significa que o usuário clicou no X para fechar sua janela
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print('Clicou')   
+            click_pos = pygame.mouse.get_pos() # a posição do mouse quando houver o evento click
+            print('eixo X:', click_pos[0])
+            print('eixo Y:', click_pos[1])
+            coordenada_X = click_pos[0]
+            coordenada_Y = click_pos[1]
+            rodadas = rodadas + 1
+            
+            if(rodadas >= 10):
+                screen.fill('black')
+                rodadas = 0
+                coordenada_X = 0
+                coordenada_Y = 0
+                tabuleiro_desenhado = False
+
+            if rodadas != 1: # (!) diferente
+                if jogador_atual == personagem_X:
+                  jogador_atual = personagem_O
+                else:
+                    jogador_atual = personagem_X
+            else:
+                    jogador_atual = personagem_X  
+            faz_jogada()        
+    
+    if tabuleiro_desenhado == False:
+       desenha_tabuleiro(5,'yellow') 
+       tabuleiro_desenhado = True
+
+
+   
+
+   
 
    
 
