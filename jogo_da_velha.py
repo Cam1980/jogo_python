@@ -43,9 +43,8 @@ def desenha_tabuleiro(espessura, cor):
     pygame.draw.line(screen, cor,(0, 200), (600, 200), espessura)
     pygame.draw.line(screen, cor,(0, 400), (600, 400), espessura)
 
-def faz_jogada():
-    
-    # Primeira linha
+def faz_jogada():            
+        # Primeira linha
    # posição dos personagens no tabuleiro (X=O, Y)
     global q1,q2,q3,q4,q5,q6,q7,q8,q9
     status = True
@@ -90,7 +89,35 @@ def faz_jogada():
     else:
         status = False     
     return status      
-  
+
+def Check_Vencedor():
+    status = False
+    # Linhas Horizontais
+    if q1 == q2 == q3 !='':
+        status = True
+        pygame.draw.line(screen, 'orange',(50, 100), (550, 100), 10) 
+    elif q4 == q5 == q6 !='':
+         status = True
+         pygame.draw.line(screen, 'orange',(50, 300), (550, 300), 10) 
+    elif q7 == q8 == q9 !='':
+        status = True
+        pygame.draw.line(screen, 'orange',(50, 500), (550, 500), 10) 
+    
+    # Linhas Verticais    
+    elif q1 == q4 == q7 !='':
+          status = True
+          pygame.draw.line(screen, 'orange',(500, 100), (500, 100), 10) 
+    elif q2 == q5 == q8 !='':
+          status = True
+    elif q3 == q6 == q9 !='':
+          status = True
+    # Linhas Diagonais     
+
+    elif q1 == q5 == q9 !='':
+          status = True
+    elif q3 == q5 == q7 !='':
+          status = True
+    return status          
 
 while running:
     # poll for events (começo do evento)
@@ -106,19 +133,25 @@ while running:
             print('eixo Y:', click_pos[1])
             coordenada_X = click_pos[0]
             coordenada_Y = click_pos[1]
+
             if(rodadas >= 9):
                 screen.fill('black')
                 rodadas = 0
                 coordenada_X = 0
                 coordenada_Y = 0
+                jogador_atual = personagem_X
                 tabuleiro_desenhado = False
+                break
+            
             if(faz_jogada()):
                 rodadas = rodadas + 1
                 if jogador_atual == personagem_X:
                    jogador_atual = personagem_O
                 else:
                      jogador_atual = personagem_X
-            
+
+                if(Check_Vencedor ()):
+                    rodadas =9
                       
                   
     
