@@ -95,28 +95,32 @@ def Check_Vencedor():
     # Linhas Horizontais
     if q1 == q2 == q3 !='':
         status = True
-        pygame.draw.line(screen, 'orange',(50, 100), (550, 100), 10) 
+        pygame.draw.line(screen, 'orange',(50, 100), (550, 100), 8) 
     elif q4 == q5 == q6 !='':
          status = True
-         pygame.draw.line(screen, 'orange',(50, 300), (550, 300), 10) 
+         pygame.draw.line(screen, 'orange',(50, 300), (550, 300), 8) 
     elif q7 == q8 == q9 !='':
         status = True
-        pygame.draw.line(screen, 'orange',(50, 500), (550, 500), 10) 
+        pygame.draw.line(screen, 'orange',(50, 500), (550, 500), 8) 
     
     # Linhas Verticais    
     elif q1 == q4 == q7 !='':
-          status = True
-          pygame.draw.line(screen, 'orange',(500, 100), (500, 100), 10) 
+         status = True
+         pygame.draw.line(screen, 'orange',(100, 50), (100, 550), 8)    
     elif q2 == q5 == q8 !='':
-          status = True
+         status = True
+         pygame.draw.line(screen, 'orange',(300, 50), (300, 550), 8)    
     elif q3 == q6 == q9 !='':
           status = True
+          pygame.draw.line(screen, 'orange',(500, 50), (500, 550), 8)    
     # Linhas Diagonais     
 
     elif q1 == q5 == q9 !='':
           status = True
+          pygame.draw.line(screen, 'orange',(50, 50), (550, 550), 8)    
     elif q3 == q5 == q7 !='':
           status = True
+          pygame.draw.line(screen, 'orange',(550, 50), (50, 550), 8)    
     return status          
 
 while running:
